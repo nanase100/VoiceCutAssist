@@ -48,8 +48,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.button5 = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -68,7 +66,7 @@
             this.textBox1.Location = new System.Drawing.Point(107, 54);
             this.textBox1.Margin = new System.Windows.Forms.Padding(0);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(470, 31);
+            this.textBox1.Size = new System.Drawing.Size(474, 31);
             this.textBox1.TabIndex = 1;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             this.textBox1.Enter += new System.EventHandler(this.textBox1_Enter);
@@ -78,7 +76,7 @@
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.Font = new System.Drawing.Font("MS UI Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button1.Location = new System.Drawing.Point(576, 54);
+            this.button1.Location = new System.Drawing.Point(580, 54);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(24, 16);
             this.button1.TabIndex = 2;
@@ -90,7 +88,7 @@
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button2.Font = new System.Drawing.Font("MS UI Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button2.Location = new System.Drawing.Point(576, 69);
+            this.button2.Location = new System.Drawing.Point(580, 69);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(24, 16);
             this.button2.TabIndex = 3;
@@ -127,9 +125,9 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 319);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 289);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(634, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(638, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "基本の使い方：保存先フォルダ名とファイル名を入力し、";
             // 
@@ -148,7 +146,7 @@
             this.textBox3.Location = new System.Drawing.Point(107, 19);
             this.textBox3.Margin = new System.Windows.Forms.Padding(0);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(470, 31);
+            this.textBox3.Size = new System.Drawing.Size(474, 31);
             this.textBox3.TabIndex = 0;
             this.textBox3.DragDrop += new System.Windows.Forms.DragEventHandler(this.textBox3_DragDrop);
             this.textBox3.DragEnter += new System.Windows.Forms.DragEventHandler(this.textBox3_DragEnter);
@@ -188,7 +186,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(610, 134);
+            this.groupBox1.Size = new System.Drawing.Size(614, 134);
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "保存先設定 (フォルダ名＋ファイル名で保存されます。)";
@@ -196,7 +194,7 @@
             // button4
             // 
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.Location = new System.Drawing.Point(576, 19);
+            this.button4.Location = new System.Drawing.Point(580, 19);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(24, 32);
             this.button4.TabIndex = 13;
@@ -225,7 +223,7 @@
             this.textBox4.Margin = new System.Windows.Forms.Padding(0);
             this.textBox4.Name = "textBox4";
             this.textBox4.ReadOnly = true;
-            this.textBox4.Size = new System.Drawing.Size(493, 31);
+            this.textBox4.Size = new System.Drawing.Size(497, 31);
             this.textBox4.TabIndex = 11;
             this.textBox4.MouseEnter += new System.EventHandler(this.textBox4_MouseEnter);
             // 
@@ -240,7 +238,7 @@
             this.groupBox2.Controls.Add(this.textBox2);
             this.groupBox2.Location = new System.Drawing.Point(12, 152);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(610, 51);
+            this.groupBox2.Size = new System.Drawing.Size(614, 51);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "保存オプション (うまく保存されない場合、設定を変えてみてください。)";
@@ -278,13 +276,11 @@
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.button5);
-            this.groupBox3.Controls.Add(this.label7);
-            this.groupBox3.Controls.Add(this.comboBox2);
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.textBox5);
             this.groupBox3.Location = new System.Drawing.Point(12, 214);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(610, 102);
+            this.groupBox3.Size = new System.Drawing.Size(614, 69);
             this.groupBox3.TabIndex = 12;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "テイクチェックシート (1行にボイスファイル名と「」でかこまれたセリフがあれば、拡張子自由です。)";
@@ -292,36 +288,13 @@
             // button5
             // 
             this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button5.Location = new System.Drawing.Point(576, 24);
+            this.button5.Location = new System.Drawing.Point(580, 24);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(24, 32);
             this.button5.TabIndex = 17;
             this.button5.Text = "...";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(285, 70);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(179, 12);
-            this.label7.TabIndex = 16;
-            this.label7.Text = "テイクチェックシートのファイルエンコード";
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
-            "shift-jis",
-            "utf-8"});
-            this.comboBox2.Location = new System.Drawing.Point(470, 67);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(134, 20);
-            this.comboBox2.TabIndex = 15;
-            this.comboBox2.Enter += new System.EventHandler(this.comboBox2_Enter);
-            this.comboBox2.MouseHover += new System.EventHandler(this.comboBox2_MouseHover);
             // 
             // label6
             // 
@@ -342,7 +315,7 @@
             this.textBox5.Location = new System.Drawing.Point(107, 25);
             this.textBox5.Margin = new System.Windows.Forms.Padding(0);
             this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(470, 31);
+            this.textBox5.Size = new System.Drawing.Size(474, 31);
             this.textBox5.TabIndex = 13;
             this.textBox5.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
             this.textBox5.DragDrop += new System.Windows.Forms.DragEventHandler(this.textBox5_DragDrop);
@@ -353,7 +326,7 @@
             // 
             this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(429, 8);
+            this.checkBox1.Location = new System.Drawing.Point(433, 8);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(175, 16);
             this.checkBox1.TabIndex = 13;
@@ -365,14 +338,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(634, 341);
+            this.ClientSize = new System.Drawing.Size(638, 311);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.statusStrip1);
-            this.MaximumSize = new System.Drawing.Size(9999, 380);
-            this.MinimumSize = new System.Drawing.Size(650, 380);
+            this.MaximumSize = new System.Drawing.Size(9999, 350);
+            this.MinimumSize = new System.Drawing.Size(650, 350);
             this.Name = "Form1";
             this.Text = "Goldwaveでの音切り補助ツール";
             this.TopMost = true;
@@ -411,9 +384,7 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
     }

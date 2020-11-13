@@ -365,8 +365,6 @@ namespace VoiceCutAssist
 
 			goldWavehwnd = FindWindowEx(IntPtr.Zero, IntPtr.Zero, "TMainForm", "GoldWave");
 
-			comboBox2.SelectedIndex = 0;
-
 			Console.WriteLine(GC.GetTotalMemory(false));
 		}
 
@@ -588,13 +586,20 @@ namespace VoiceCutAssist
 			string line;
 			string serif;
 			Regex regex = new Regex( ".*(「.*」).*");
-			
+
 			Match	result;
+			System.Text.Encoding fileEncode;
+			GetEncodeClass encCheck = new GetEncodeClass();
+			if (File.Exists(filePath))
+			{
+				fileEncode = encCheck.GetEncoding(filePath);
+			}
+			else
+            {
+				return;
+            }	
 
-			System.Text.Encoding fileEncode = System.Text.Encoding.GetEncoding("shift_jis");
-			if (comboBox2.SelectedIndex == 1 )  fileEncode = System.Text.Encoding.GetEncoding("utf-8");
-
-			using ( System.IO.StreamReader file = new System.IO.StreamReader(filePath, fileEncode ) )
+			using ( System.IO.StreamReader file = new System.IO.StreamReader(filePath, fileEncode) )
 			{
 				while ((line = file.ReadLine()) != null)
 				{
