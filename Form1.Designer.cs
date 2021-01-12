@@ -104,7 +104,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(48, 27);
             this.textBox2.TabIndex = 1;
-            this.textBox2.Text = "200";
+            this.textBox2.Text = "270";
             this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             this.textBox2.MouseEnter += new System.EventHandler(this.textBox2_MouseEnter);
             // 
@@ -236,7 +236,7 @@
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.comboBox1);
             this.groupBox2.Controls.Add(this.textBox2);
-            this.groupBox2.Location = new System.Drawing.Point(12, 152);
+            this.groupBox2.Location = new System.Drawing.Point(12, 235);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(614, 51);
             this.groupBox2.TabIndex = 0;
@@ -278,12 +278,12 @@
             this.groupBox3.Controls.Add(this.button5);
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.textBox5);
-            this.groupBox3.Location = new System.Drawing.Point(12, 214);
+            this.groupBox3.Location = new System.Drawing.Point(12, 152);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(614, 69);
             this.groupBox3.TabIndex = 12;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "テイクチェックシート (1行にボイスファイル名と「」でかこまれたセリフがあれば、拡張子自由です。)";
+            this.groupBox3.Text = "テイクチェックシート (1行にボイスファイル名とセリフがあり、タブ(\\t)で区切られたテキストファイルを指定します。)";
             // 
             // button5
             // 
@@ -326,11 +326,11 @@
             // 
             this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(433, 8);
+            this.checkBox1.Location = new System.Drawing.Point(453, 8);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(175, 16);
+            this.checkBox1.Size = new System.Drawing.Size(155, 16);
             this.checkBox1.TabIndex = 13;
-            this.checkBox1.Text = "ウインドウを最小限表示にします";
+            this.checkBox1.Text = "初期設定の項目を隠します";
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 

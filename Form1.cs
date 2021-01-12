@@ -18,11 +18,14 @@ namespace VoiceCutAssist
 {
 	public partial class Form1 : Form
 	{
-
-		bool	m_enableNumric = false;
+		int		m_nowSelectID = 0;
+//		bool	m_enableNumric = false;
 		int		m_countDigit = 0;
-		int		m_nowSerialNum = 0;
+//		int		m_nowSerialNum = 0;
 		string	m_baseNmae = "";
+
+		string	m_preSaveName = "";
+		bool m_ratchetRetakeFlg	= false;
 
 		List<string[]>		m_serifList = new List<string[]>();
 
@@ -62,18 +65,18 @@ namespace VoiceCutAssist
 		private static extern bool SetWindowPos(IntPtr hWnd,
 		int hWndInsertAfter, int x, int y, int cx, int cy, int uFlags);
 
-		private const int SWP_NOSIZE = 0x0001;
-		private const int SWP_NOMOVE = 0x0002;
-		private const int SWP_SHOWWINDOW = 0x0040;
+		private const int SWP_NOSIZE		= 0x0001;
+		private const int SWP_NOMOVE		= 0x0002;
+		private const int SWP_SHOWWINDOW	= 0x0040;
 
-		private const int HWND_TOPMOST	= -1;
-		private const int HWND_NOTOPMOST = -2;
+		private const int HWND_TOPMOST		= -1;
+		private const int HWND_NOTOPMOST	= -2;
 
-		private const int MOD_ALT		= 0x01;
-		private const int MOD_CONTROL	= 0x02;
-		private const int MOD_SHIFT		= 0x04;
-		private const int MOD_WIN		= 0x08;
-		private const int WM_HOTKEY		= 0x312;
+		private const int MOD_ALT			= 0x01;
+		private const int MOD_CONTROL		= 0x02;
+		private const int MOD_SHIFT			= 0x04;
+		private const int MOD_WIN			= 0x08;
+		private const int WM_HOTKEY			= 0x312;
 
 
 
@@ -86,7 +89,8 @@ namespace VoiceCutAssist
 
 
 
-		public short hotkeyID;
+		public short hotkeyID_D;
+		public short hotkeyID_R;
 
 
 
@@ -162,7 +166,7 @@ namespace VoiceCutAssist
 		private const int KEYEVENTF_KEYUP = 0x2;            // キーを離す
 		private const int KEYEVENTF_EXTENDEDKEY = 0x1;      // 拡張コード
 		private const int VK_SHIFT = 0x10;                  // SHIFTキー
-		private const int VK_MENU = 0x12;                  // ALtキー
+		private const int VK_MENU = 0x12;                   // ALtキー
 		private const int VK_RETURN = 0x0d;                  // Enterキー
 		
 
@@ -188,10 +192,15 @@ namespace VoiceCutAssist
 		}
 
 
+
+		/// <summary>
+		/// goldwaveの操作実行。メイン機能
+		/// </summary>
 		public void Do()
 		{
 			toolStripStatusLabel1.Text = "";
-			
+
+			m_ratchetRetakeFlg = true;
 
 			goldWavehwnd = FindWindowEx(IntPtr.Zero, IntPtr.Zero, "TMainForm", "GoldWave");
 
@@ -349,16 +358,47 @@ namespace VoiceCutAssist
 
 		}
 
+		/// <summary>
+		/// F1F2 リテイクを発見！のときの処理
+		/// </summary>
+		private void RetakeDo()
+        {
+
+			bool ret = File.Exists(m_preSaveName + ".wav");
+
+			if( ret )
+			{ 
+				int rNo = 1;
+				string newName = "";
+
+				while(true)
+				{
+					newName = m_preSaveName + $"_r{rNo}.wav";
+
+					if ( File.Exists(newName) == false ) break;
+
+					rNo++;
+
+				}
+				File.Move(m_preSaveName + ".wav", newName);
+				if( m_ratchetRetakeFlg ) IncFileName(-1);
+				m_ratchetRetakeFlg = false;
+			}
+			
+        }
 
 
 		private void Form1_Load( object sender, EventArgs e )
 		{
 
 			// ホットキーのために唯一無二のIDを生成する
-			hotkeyID = GlobalAddAtom("GlobalHotKey " + this.GetHashCode().ToString());
+			hotkeyID_D = GlobalAddAtom("GlobalHotKey_D " + this.GetHashCode().ToString());
+			hotkeyID_R = GlobalAddAtom("GlobalHotKey_R " + this.GetHashCode().ToString());
+
 			// Ctrl+Aキーを登録する
 			//RegisterHotKey(this.Handle, hotkeyID,  0, Keys.D);
-			RegisterHotKey(this.Handle, hotkeyID, MOD_CONTROL, Keys.D);
+			RegisterHotKey(this.Handle, hotkeyID_D, MOD_CONTROL, Keys.D);
+			RegisterHotKey(this.Handle, hotkeyID_R, MOD_CONTROL, Keys.R);
 
 			//textBox1.Text = Clipboard.GetText();
 			comboBox1.SelectedIndex = 0;
@@ -376,28 +416,42 @@ namespace VoiceCutAssist
 				// ホットキーが押されたときの処理
 				//				Debug.WriteLine("Ctrl+A");
 
-				if (m_enableNumric )
-				{
+				short nowKey = (short)(m.WParam.ToInt32()&0x0000ffff);
 
-					string copyFilename = textBox3.Text + textBox1.Text;
-					Clipboard.SetText(copyFilename);
+				//メイン機能
+                if( nowKey == hotkeyID_D)
+				{ 
+				//	if (m_enableNumric )
+				//	{
 
-					Do();
+						string copyFilename = textBox3.Text + textBox1.Text;
+						Clipboard.SetText(copyFilename);
 
-					System.Threading.Thread.Sleep(100);
+						m_preSaveName = copyFilename;
 
-					if ( Check_IsComplete(copyFilename) == false )
-					{
-						toolStripStatusLabel1.ForeColor = Color.Red;
-						toolStripStatusLabel1.Text = "ファイルが保存されませんでした。再度、保存(Ctrl+D)の操作を行ってください。";
-						return;
-					}
+						Do();
 
-					toolStripStatusLabel1.ForeColor = Color.Black;
-					toolStripStatusLabel1.Text = "";
-					IncFileName();
+						System.Threading.Thread.Sleep(100);
 
+						if ( Check_IsComplete(copyFilename) == false )
+						{
+							toolStripStatusLabel1.ForeColor = Color.Red;
+							toolStripStatusLabel1.Text = "ファイルが保存されませんでした。再度、保存(Ctrl+D)の操作を行ってください。";
+							return;
+						}
+
+						toolStripStatusLabel1.ForeColor = Color.Black;
+						toolStripStatusLabel1.Text = "";
+						IncFileName();
+
+					//}
 				}
+
+				//リテイク機能
+				if ( nowKey == hotkeyID_R)
+                {
+					RetakeDo();
+                }
 			}
 		}
 	 
@@ -409,13 +463,12 @@ namespace VoiceCutAssist
 
 			ret = File.Exists(path+".wav");
 
-
 			return ret;
 		}
 
 		private void textBox1_TextChanged(object sender, EventArgs e)
 		{
-
+			/*
 			Match mr = Regex.Match( textBox1.Text, @"(.*_)(\d+)\D*");
 
 			m_enableNumric = mr.Success;
@@ -435,21 +488,30 @@ namespace VoiceCutAssist
 			{
 				textBox1.BackColor = Color.Red;
 			}
+			*/
+			string ret = Search_TakeCheck(textBox1.Text);
 
+			if( ret != "" )	textBox4.Text = ret;
 
-			textBox4.Text  = Search_TakeCheck( textBox1.Text );
-
+			int voiceID = Search_TakeCheckID(textBox1.Text);
+			if( voiceID != -1 ) m_nowSelectID = voiceID;
 		}
 
 		private void IncFileName( int addNum = 1 )
 		{
-			textBox1.Text = m_baseNmae + (m_nowSerialNum + addNum).ToString().PadLeft(m_countDigit, '0');
+			//textBox1.Text = m_baseNmae + (m_nowSerialNum + addNum).ToString().PadLeft(m_countDigit, '0');
+			m_nowSelectID += addNum;
+			if( m_nowSelectID < 0 ) m_nowSelectID = 0;
+			if (m_nowSelectID >= m_serifList.Count ) m_nowSelectID = m_serifList.Count-1;
+			
+			textBox1.Text = m_serifList[m_nowSelectID][0];
+
 		}
 
 		private void Form1_MouseWheel(object sender, MouseEventArgs e)
         {
-			if( e.Delta > 0 )	IncFileName(-1);
-			else				IncFileName(1);
+			IncFileName( (e.Delta > 0 ?- 1:1) );
+			
 		}
 
 		private void button1_Click(object sender, EventArgs e)
@@ -575,6 +637,9 @@ namespace VoiceCutAssist
 				"\n"+
 				"■＋α　テイクチェックシートを下部の欄に読み込ませておくと、ファイル名が一致するセリフ内容を表示できます。\n" +
 				"\n" +
+				"☆リテイク機能！ボイスを聞いたら保存済みセリフのリテイクがきたとき、Ctrl+Rを押すと、自動的に前に保存した音声に「_r1」と追加され、ファイル名の欄も一つ戻ります\n" +
+				"\n" +
+
 				"※ 自動保存が成功しない場合、オプションの項目、処理待ち時間を長めに設定してみください。");
         }
 
@@ -585,7 +650,8 @@ namespace VoiceCutAssist
 			m_serifList.Clear();
 			string line;
 			string serif;
-			Regex regex = new Regex( ".*(「.*」).*");
+			string voiceName;
+			Regex regex = new Regex( "(.*?)\\t(.*)");
 
 			Match	result;
 			System.Text.Encoding fileEncode;
@@ -607,31 +673,47 @@ namespace VoiceCutAssist
 
 					if( result.Success == false ) continue;
 
-					serif = regex.Replace( line, "$1");
-					m_serifList.Add( new string[2] { line, serif} );
-					
+					serif = regex.Replace( line, "$2");
+					voiceName = regex.Replace(line, "$1");
+					m_serifList.Add( new string[2] { voiceName, serif} );
+
 				}
 			}
 		}
 
-		private string Search_TakeCheck( string fileName )
+		private string Search_TakeCheck( string voiceName)
         {
 			string ret = "";
 
 			foreach( var strData in m_serifList )
             {
-				if( strData[0].IndexOf(fileName) != -1 )
+				if( strData[0].IndexOf(voiceName) != -1 )
                 {
 					ret = strData[1];
 					break;
                 }
             }
 
-
 			return ret;
         }
 
-        private void textBox5_DragEnter(object sender, DragEventArgs e)
+		private int Search_TakeCheckID(string voiceName)
+		{
+			int ret = 0;
+
+			foreach (var strData in m_serifList)
+			{
+				if (strData[0].IndexOf(voiceName) != -1)
+				{
+					return ret;
+				}
+				ret++;
+			}
+
+			return -1;
+		}
+
+		private void textBox5_DragEnter(object sender, DragEventArgs e)
         {
 			//ファイルがドラッグされている場合、カーソルを変更する
 			if (e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -707,6 +789,12 @@ namespace VoiceCutAssist
         private void textBox5_TextChanged(object sender, EventArgs e)
         {
 			Load_TakeCheck(textBox5.Text);
+
+			if(m_serifList.Count > 0 )
+            {
+				m_nowSelectID = 0;
+				textBox1.Text = m_serifList[m_nowSelectID][0];
+            }
 		}
 
         
