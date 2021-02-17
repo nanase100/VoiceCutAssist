@@ -31,7 +31,8 @@ namespace VoiceCutAssist
 
 		int waitTime= 0;
 
-		IntPtr goldWavehwnd;
+		IntPtr goldWavehwnd = IntPtr.Zero;
+		
 
 		// C#
 		// Windows API functions and constants
@@ -53,6 +54,10 @@ namespace VoiceCutAssist
 		private static extern bool PostMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 		[DllImport("user32.dll")]
 		private static extern int VkKeyScan(char ch);
+
+		[DllImport("user32.dll")]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		internal static extern bool IsWindow(IntPtr hWnd);
 
 		public static void ActiveWindowWithSetWindowPos(IntPtr hWnd)
 		{
@@ -202,9 +207,7 @@ namespace VoiceCutAssist
 
 			m_ratchetRetakeFlg = true;
 
-			goldWavehwnd = FindWindowEx(IntPtr.Zero, IntPtr.Zero, "TMainForm", "GoldWave");
-
-//			ActiveWindowWithSetWindowPos(goldWavehwnd);
+			//ActiveWindowWithSetWindowPos(goldWavehwnd);
 			SetForegroundWindow(goldWavehwnd);
 
 			System.Threading.Thread.Sleep(waitTime);
@@ -363,7 +366,6 @@ namespace VoiceCutAssist
 		/// </summary>
 		private void RetakeDo()
         {
-
 			bool ret = File.Exists(m_preSaveName + ".wav");
 
 			if( ret )
@@ -503,15 +505,14 @@ namespace VoiceCutAssist
 			m_nowSelectID += addNum;
 			if( m_nowSelectID < 0 ) m_nowSelectID = 0;
 			if (m_nowSelectID >= m_serifList.Count ) m_nowSelectID = m_serifList.Count-1;
-			
-			textBox1.Text = m_serifList[m_nowSelectID][0];
+
+			if (m_serifList.Count > m_nowSelectID && m_nowSelectID != -1)	textBox1.Text = m_serifList[m_nowSelectID][0];
 
 		}
 
 		private void Form1_MouseWheel(object sender, MouseEventArgs e)
         {
 			IncFileName( (e.Delta > 0 ?- 1:1) );
-			
 		}
 
 		private void button1_Click(object sender, EventArgs e)
@@ -797,7 +798,25 @@ namespace VoiceCutAssist
             }
 		}
 
-        
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+			if(goldWavehwnd == IntPtr.Zero || IsWindow(goldWavehwnd) == false )
+			{ 
+				goldWavehwnd = FindWindowEx(IntPtr.Zero, IntPtr.Zero, "TMainForm", "GoldWave");
+
+				if (goldWavehwnd == IntPtr.Zero || IsWindow(goldWavehwnd) == false)
+                {
+					toolStripStatusLabel1.ForeColor = Color.Red;
+					toolStripStatusLabel1.Text = "GOLD WAVEが起動されていません。";
+                }
+                else
+                {
+					toolStripStatusLabel1.ForeColor = Color.Black;
+					toolStripStatusLabel1.Text = "GOLD WAVEとリンクしました。";
+				}
+
+			}
+		}
     }
  }
  
