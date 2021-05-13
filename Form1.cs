@@ -405,7 +405,7 @@ namespace VoiceCutAssist
 			//textBox1.Text = Clipboard.GetText();
 			comboBox1.SelectedIndex = 0;
 
-			goldWavehwnd = FindWindowEx(IntPtr.Zero, IntPtr.Zero, "TMainForm", "GoldWave");
+			goldWavehwnd = FindWindowEx(IntPtr.Zero, IntPtr.Zero, "TMainForm", null);
 
 			Console.WriteLine(GC.GetTotalMemory(false));
 		}
@@ -781,8 +781,7 @@ namespace VoiceCutAssist
 			{
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					textBox5.Text = ofd.FileName;
-					
+					textBox5.Text = ofd.FileName;	
 				}
 			}
 		}
@@ -814,8 +813,62 @@ namespace VoiceCutAssist
 					toolStripStatusLabel1.ForeColor = Color.Black;
 					toolStripStatusLabel1.Text = "GOLD WAVEとリンクしました。";
 				}
-
 			}
+		}
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+			CheckVoiceExist();
+		}
+
+		private void CheckVoiceExist()
+        {
+			if(m_serifList.Count == 0 )
+            {
+				System.Windows.Forms.MessageBox.Show("テイクチェックシートが正しく読み込まれていません。");
+				return;
+			}
+			string checkPath = "";
+			List<int> noneIDList = new List<int>();
+			int loopCount = m_serifList.Count();
+			for (int i = 0; i < loopCount; i++)
+			{
+				checkPath = textBox3.Text + m_serifList[i][0] + ".wav";
+				if (File.Exists(checkPath) == false)
+				{
+					noneIDList.Add(i);
+				}
+			}
+
+			string showList = "";
+			int tmpID;
+			for (int i = 0; i < noneIDList.Count; i++)
+			{
+				tmpID = noneIDList[i];
+				showList += m_serifList[tmpID][0] + "	" + m_serifList[tmpID][1] + Environment.NewLine;
+			}
+			//if (showList != "") System.Windows.Forms.MessageBox.Show(showList);
+			if (showList != "") 
+			{
+				var dlg = new Form2( showList );
+				
+				dlg.ShowDialog();
+				dlg.Dispose();
+            }
+            else
+            {
+				System.Windows.Forms.MessageBox.Show( "テイクチェックシートにあるボイスは全て保存先フォルダに存在します。(wav形式)");
+			}
+		}
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+			if( textBox3.Text.EndsWith(@"\") == false ) textBox3.Text += @"\";
 		}
     }
  }
