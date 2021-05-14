@@ -830,7 +830,7 @@ namespace VoiceCutAssist
         {
 			if(m_serifList.Count == 0 )
             {
-				System.Windows.Forms.MessageBox.Show("テイクチェックシートが正しく読み込まれていません。");
+				System.Windows.Forms.MessageBox.Show("テイクチェックシートが指定されていないか、正しく読み込まれていません。\nテイクチェックシートの指定と内容を確認してください。");
 				return;
 			}
 			string checkPath = "";
