@@ -152,27 +152,27 @@ namespace VoiceCutAssist
 		private extern static int MapVirtualKey(
 			int wCode, int wMapType);
 
-		private const int INPUT_MOUSE = 0;                  // マウスイベント
-		private const int INPUT_KEYBOARD = 1;               // キーボードイベント
-		private const int INPUT_HARDWARE = 2;               // ハードウェアイベント
+		private const int INPUT_MOUSE = 0;				  // マウスイベント
+		private const int INPUT_KEYBOARD = 1;			   // キーボードイベント
+		private const int INPUT_HARDWARE = 2;			   // ハードウェアイベント
 
-		private const int MOUSEEVENTF_MOVE = 0x1;           // マウスを移動する
-		private const int MOUSEEVENTF_ABSOLUTE = 0x8000;    // 絶対座標指定
-		private const int MOUSEEVENTF_LEFTDOWN = 0x2;       // 左　ボタンを押す
-		private const int MOUSEEVENTF_LEFTUP = 0x4;         // 左　ボタンを離す
-		private const int MOUSEEVENTF_RIGHTDOWN = 0x8;      // 右　ボタンを押す
-		private const int MOUSEEVENTF_RIGHTUP = 0x10;       // 右　ボタンを離す
-		private const int MOUSEEVENTF_MIDDLEDOWN = 0x20;    // 中央ボタンを押す
-		private const int MOUSEEVENTF_MIDDLEUP = 0x40;      // 中央ボタンを離す
-		private const int MOUSEEVENTF_WHEEL = 0x800;        // ホイールを回転する
-		private const int WHEEL_DELTA = 120;                // ホイール回転値
+		private const int MOUSEEVENTF_MOVE = 0x1;		   // マウスを移動する
+		private const int MOUSEEVENTF_ABSOLUTE = 0x8000;	// 絶対座標指定
+		private const int MOUSEEVENTF_LEFTDOWN = 0x2;	   // 左　ボタンを押す
+		private const int MOUSEEVENTF_LEFTUP = 0x4;		 // 左　ボタンを離す
+		private const int MOUSEEVENTF_RIGHTDOWN = 0x8;	  // 右　ボタンを押す
+		private const int MOUSEEVENTF_RIGHTUP = 0x10;	   // 右　ボタンを離す
+		private const int MOUSEEVENTF_MIDDLEDOWN = 0x20;	// 中央ボタンを押す
+		private const int MOUSEEVENTF_MIDDLEUP = 0x40;	  // 中央ボタンを離す
+		private const int MOUSEEVENTF_WHEEL = 0x800;		// ホイールを回転する
+		private const int WHEEL_DELTA = 120;				// ホイール回転値
 
-		private const int KEYEVENTF_KEYDOWN = 0x0;          // キーを押す
-		private const int KEYEVENTF_KEYUP = 0x2;            // キーを離す
-		private const int KEYEVENTF_EXTENDEDKEY = 0x1;      // 拡張コード
-		private const int VK_SHIFT = 0x10;                  // SHIFTキー
-		private const int VK_MENU = 0x12;                   // ALtキー
-		private const int VK_RETURN = 0x0d;                  // Enterキー
+		private const int KEYEVENTF_KEYDOWN = 0x0;		  // キーを押す
+		private const int KEYEVENTF_KEYUP = 0x2;			// キーを離す
+		private const int KEYEVENTF_EXTENDEDKEY = 0x1;	  // 拡張コード
+		private const int VK_SHIFT = 0x10;				  // SHIFTキー
+		private const int VK_MENU = 0x12;				   // ALtキー
+		private const int VK_RETURN = 0x0d;				  // Enterキー
 		
 
 
@@ -365,7 +365,7 @@ namespace VoiceCutAssist
 		/// F1F2 リテイクを発見！のときの処理
 		/// </summary>
 		private void RetakeDo()
-        {
+		{
 			bool ret = File.Exists(m_preSaveName + ".wav");
 
 			if( ret )
@@ -387,7 +387,7 @@ namespace VoiceCutAssist
 				m_ratchetRetakeFlg = false;
 			}
 			
-        }
+		}
 
 
 		private void Form1_Load( object sender, EventArgs e )
@@ -421,7 +421,7 @@ namespace VoiceCutAssist
 				short nowKey = (short)(m.WParam.ToInt32()&0x0000ffff);
 
 				//メイン機能
-                if( nowKey == hotkeyID_D)
+				if( nowKey == hotkeyID_D)
 				{ 
 				//	if (m_enableNumric )
 				//	{
@@ -451,9 +451,9 @@ namespace VoiceCutAssist
 
 				//リテイク機能
 				if ( nowKey == hotkeyID_R)
-                {
+				{
 					RetakeDo();
-                }
+				}
 			}
 		}
 	 
@@ -511,7 +511,7 @@ namespace VoiceCutAssist
 		}
 
 		private void Form1_MouseWheel(object sender, MouseEventArgs e)
-        {
+		{
 			IncFileName( (e.Delta > 0 ?- 1:1) );
 		}
 
@@ -562,37 +562,37 @@ namespace VoiceCutAssist
 			}
 		}
 
-        private void textBox3_Enter(object sender, EventArgs e)
-        {
+		private void textBox3_Enter(object sender, EventArgs e)
+		{
 			toolStripStatusLabel1.ForeColor = Color.Black;
 			toolStripStatusLabel1.Text = "保存するフォルダ名を指定してください。保存先フォルダをドラッグアンドドロップもできます。";
 		}
 
-        private void textBox1_Enter(object sender, EventArgs e)
-        {
+		private void textBox1_Enter(object sender, EventArgs e)
+		{
 			toolStripStatusLabel1.ForeColor = Color.Black;
 			toolStripStatusLabel1.Text = "保存するファイル名を入力してください。ファイル名の後ろに必ず \"_0001\" のような数字をふってください。桁数は自由です。";		}
 
-        private void comboBox1_MouseEnter(object sender, EventArgs e)
-        {
+		private void comboBox1_MouseEnter(object sender, EventArgs e)
+		{
 			toolStripStatusLabel1.ForeColor = Color.Black;
 			toolStripStatusLabel1.Text = "自動で保存するやり方を変更できます。PC環境によって最適なものは違ってきます。";
 		}
 
-        private void textBox2_MouseEnter(object sender, EventArgs e)
-        {
+		private void textBox2_MouseEnter(object sender, EventArgs e)
+		{
 			toolStripStatusLabel1.ForeColor = Color.Black;
 			toolStripStatusLabel1.Text = "自動で保存するときの待ち時間を設定します。高スペック:100前後、平均スペック:300、低スペックPCでは500～1000が目安です。";
 		}
 
-        private void textBox3_MouseEnter(object sender, EventArgs e)
-        {
+		private void textBox3_MouseEnter(object sender, EventArgs e)
+		{
 			toolStripStatusLabel1.ForeColor = Color.Black;
 			toolStripStatusLabel1.Text = "保存するフォルダ名を指定してください。保存先フォルダをドラッグアンドドロップもできます。";
 		}
 
 		private void textBox1_MouseEnter(object sender, EventArgs e)
-        {
+		{
 			toolStripStatusLabel1.ForeColor = Color.Black;
 			toolStripStatusLabel1.Text = "保存するファイル名を入力してください。ファイル名の後ろに必ず \"_0001\" のような数字をふってください。桁数は自由です。";		
 		}
@@ -629,7 +629,7 @@ namespace VoiceCutAssist
 		}
 
 		private void button3_Click(object sender, EventArgs e)
-        {
+		{
 			System.Windows.Forms.MessageBox.Show("○このツールは GOLD WAV での音切り作業を補助するツールです。\n\n" +
 				"■1 このツール上の保存先フォルダやファイル名を設定します。必要ならオプション項目も調整します。\n"+
 				"■2 GOLD WAV 上で切り取りたい範囲を選択した状態で、キーボードで【CTRL + D】を押します。\n"+
@@ -642,12 +642,12 @@ namespace VoiceCutAssist
 				"\n" +
 
 				"※ 自動保存が成功しない場合、オプションの項目、処理待ち時間を長めに設定してみください。");
-        }
+		}
 
 
 
 		private void Load_TakeCheck( string filePath )
-        {
+		{
 			m_serifList.Clear();
 			string line;
 			string serif;
@@ -662,9 +662,9 @@ namespace VoiceCutAssist
 				fileEncode = encCheck.GetEncoding(filePath);
 			}
 			else
-            {
+			{
 				return;
-            }	
+			}	
 
 			using ( System.IO.StreamReader file = new System.IO.StreamReader(filePath, fileEncode) )
 			{
@@ -683,20 +683,20 @@ namespace VoiceCutAssist
 		}
 
 		private string Search_TakeCheck( string voiceName)
-        {
+		{
 			string ret = "";
 
 			foreach( var strData in m_serifList )
-            {
+			{
 				if( strData[0].IndexOf(voiceName) != -1 )
-                {
+				{
 					ret = strData[1];
 					break;
-                }
-            }
+				}
+			}
 
 			return ret;
-        }
+		}
 
 		private int Search_TakeCheckID(string voiceName)
 		{
@@ -715,7 +715,7 @@ namespace VoiceCutAssist
 		}
 
 		private void textBox5_DragEnter(object sender, DragEventArgs e)
-        {
+		{
 			//ファイルがドラッグされている場合、カーソルを変更する
 			if (e.Data.GetDataPresent(DataFormats.FileDrop))
 			{
@@ -723,8 +723,8 @@ namespace VoiceCutAssist
 			}
 		}
 
-        private void textBox5_DragDrop(object sender, DragEventArgs e)
-        {
+		private void textBox5_DragDrop(object sender, DragEventArgs e)
+		{
 			//ドロップされたファイルの一覧を取得
 			string[] fileName = (string[])e.Data.GetData(DataFormats.FileDrop, false);
 			if (fileName.Length <= 0)
@@ -744,28 +744,28 @@ namespace VoiceCutAssist
 
 		}
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
+		private void checkBox1_CheckedChanged(object sender, EventArgs e)
+		{
 			if( checkBox1.Checked == true )
-            {
+			{
 				groupBox2.Visible = false;
 				groupBox3.Visible = false;
 
 				this.MaximumSize = new Size(2560,220);
 				this.MinimumSize = new Size(650, 220);
 			}
-            else
-            {
+			else
+			{
 				groupBox2.Visible = true;
 				groupBox3.Visible = true;
 
 				this.MaximumSize = new Size(2560,380);
 				this.MinimumSize = new Size(650, 380);
 			}
-        }
+		}
 
-        private void button4_Click(object sender, EventArgs e)
-        {
+		private void button4_Click(object sender, EventArgs e)
+		{
 			using (var ofd = new OpenFileDialog() { FileName = "SelectFolder", Filter = "Folder|.", CheckFileExists = false })
 			{
 				if (ofd.ShowDialog() == DialogResult.OK)
@@ -775,8 +775,8 @@ namespace VoiceCutAssist
 			}
 		}
 
-        private void button5_Click(object sender, EventArgs e)
-        {
+		private void button5_Click(object sender, EventArgs e)
+		{
 			using (var ofd = new OpenFileDialog() { FileName = "SelectFile", Filter = "すべてのファイル(*.*)|*.*", CheckFileExists = true })
 			{
 				if (ofd.ShowDialog() == DialogResult.OK)
@@ -786,50 +786,50 @@ namespace VoiceCutAssist
 			}
 		}
 
-        private void textBox5_TextChanged(object sender, EventArgs e)
-        {
+		private void textBox5_TextChanged(object sender, EventArgs e)
+		{
 			Load_TakeCheck(textBox5.Text);
 
 			if(m_serifList.Count > 0 )
-            {
+			{
 				m_nowSelectID = 0;
 				textBox1.Text = m_serifList[m_nowSelectID][0];
-            }
+			}
 		}
 
-        private void timer1_Tick(object sender, EventArgs e)
-        {
+		private void timer1_Tick(object sender, EventArgs e)
+		{
 			if(goldWavehwnd == IntPtr.Zero || IsWindow(goldWavehwnd) == false )
 			{ 
 				goldWavehwnd = FindWindowEx(IntPtr.Zero, IntPtr.Zero, "TMainForm", "GoldWave");
 
 				if (goldWavehwnd == IntPtr.Zero || IsWindow(goldWavehwnd) == false)
-                {
+				{
 					toolStripStatusLabel1.ForeColor = Color.Red;
 					toolStripStatusLabel1.Text = "GOLD WAVEが起動されていません。";
-                }
-                else
-                {
+				}
+				else
+				{
 					toolStripStatusLabel1.ForeColor = Color.Black;
 					toolStripStatusLabel1.Text = "GOLD WAVEとリンクしました。";
 				}
 			}
 		}
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
+		private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+		{
 
-        }
+		}
 
-        private void button6_Click(object sender, EventArgs e)
-        {
+		private void button6_Click(object sender, EventArgs e)
+		{
 			CheckVoiceExist();
 		}
 
 		private void CheckVoiceExist()
-        {
+		{
 			if(m_serifList.Count == 0 )
-            {
+			{
 				System.Windows.Forms.MessageBox.Show("テイクチェックシートが指定されていないか、正しく読み込まれていません。\nテイクチェックシートの指定と内容を確認してください。");
 				return;
 			}
@@ -859,18 +859,18 @@ namespace VoiceCutAssist
 				
 				dlg.ShowDialog();
 				dlg.Dispose();
-            }
-            else
-            {
+			}
+			else
+			{
 				System.Windows.Forms.MessageBox.Show( "テイクチェックシートにあるボイスは全て保存先フォルダに存在します。(wav形式)");
 			}
 		}
 
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
+		private void textBox3_TextChanged(object sender, EventArgs e)
+		{
 			if( textBox3.Text.EndsWith(@"\") == false ) textBox3.Text += @"\";
 		}
-    }
+	}
  }
  
 
