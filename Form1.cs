@@ -18,20 +18,25 @@ namespace VoiceCutAssist
 {
 	public partial class Form1 : Form
 	{
-		int		m_nowSelectID = 0;
-//		bool	m_enableNumric = false;
-		int		m_countDigit = 0;
-//		int		m_nowSerialNum = 0;
-		string	m_baseNmae = "";
+		int		m_nowSelectID	= 0;
+//		bool	m_enableNumric	= false;
+		int		m_countDigit	= 0;
+//		int		m_nowSerialNum	= 0;
+		string	m_baseNmae		= "";
 
-		string	m_preSaveName = "";
+		int		m_goldWaveVer	= 5;
+
+		string	m_preSaveName	= "";
 		bool m_ratchetRetakeFlg	= false;
 
-		List<string[]>		m_serifList = new List<string[]>();
+		public List<string[]>		m_serifList = new List<string[]>();
 
-		int waitTime= 0;
+		int waitTime= 300;
 
-		IntPtr goldWavehwnd = IntPtr.Zero;
+		Form2 m_checkListDlg	= null;	
+		Form3 m_voiceListDlg	= null;
+
+		IntPtr goldWavehwnd		= IntPtr.Zero;
 		
 
 		// C#
@@ -189,6 +194,7 @@ namespace VoiceCutAssist
 			InitializeComponent();
 
 			this.MouseWheel += Form1_MouseWheel;
+			textBox4.MouseWheel += Form1_MouseWheel;
 		}
 
 		private void 終了しますToolStripMenuItem_Click( object sender, EventArgs e )
@@ -210,16 +216,30 @@ namespace VoiceCutAssist
 			//ActiveWindowWithSetWindowPos(goldWavehwnd);
 			SetForegroundWindow(goldWavehwnd);
 
-			System.Threading.Thread.Sleep(waitTime);
+			//System.Threading.Thread.Sleep(waitTime);
+			System.Threading.Thread.Sleep(200);
 
+			SendKeys.SendWait("%f");
+			System.Threading.Thread.Sleep(100);
+			SendKeys.SendWait("z");
+			System.Threading.Thread.Sleep(100);
+			SendKeys.SendWait("^V");
+			System.Threading.Thread.Sleep(100);
+			SendKeys.SendWait("~");
+
+			System.Threading.Thread.Sleep(200);
+
+			/*
 			if (comboBox1.SelectedIndex == 0)
 			{
 				SendKeys.SendWait("%f");
 				System.Threading.Thread.Sleep(waitTime);
+				
 				SendKeys.SendWait("z");
 				System.Threading.Thread.Sleep(waitTime);
+				
 				SendKeys.SendWait("^V");
-				System.Threading.Thread.Sleep(waitTime);
+				
 				SendKeys.SendWait("~");
 				System.Threading.Thread.Sleep(waitTime);
 			}
@@ -361,6 +381,70 @@ namespace VoiceCutAssist
 
 		}
 
+
+
+
+		/// <summary>
+		/// goldwaveの操作実行。メイン機能
+		/// </summary>
+		public void Do_ver4()
+		{
+			toolStripStatusLabel1.Text = "";
+
+			m_ratchetRetakeFlg = true;
+
+			ActiveWindowWithSetWindowPos(goldWavehwnd);
+			SetForegroundWindow(goldWavehwnd);
+
+			/*
+			System.Threading.Thread.Sleep(waitTime);
+
+			if (comboBox1.SelectedIndex == 0)
+			{
+				SendKeys.SendWait("%f");
+				System.Threading.Thread.Sleep(waitTime);
+				SendKeys.SendWait("{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}");
+				System.Threading.Thread.Sleep(waitTime);
+				SendKeys.SendWait("{ENTER}");
+				System.Threading.Thread.Sleep(waitTime);
+				SendKeys.Send("^V");
+				System.Threading.Thread.Sleep(waitTime);
+				SendKeys.SendWait("{ENTER}");
+				System.Threading.Thread.Sleep(waitTime);
+			}
+
+			if (comboBox1.SelectedIndex == 1)
+			{
+				SendKeys.Send("%f");
+				System.Threading.Thread.Sleep(waitTime);
+				SendKeys.SendWait("{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}");
+				System.Threading.Thread.Sleep(waitTime);
+				SendKeys.SendWait("{ENTER}");
+				System.Threading.Thread.Sleep(waitTime);
+				SendKeys.Send("^V");
+				System.Threading.Thread.Sleep(waitTime);
+				SendKeys.SendWait("{ENTER}");
+				System.Threading.Thread.Sleep(waitTime);
+			}
+
+			if (comboBox1.SelectedIndex == 2)
+			{
+				
+
+			}
+			*/
+
+
+		}
+
+
+
+
+
+
+
+
+
 		/// <summary>
 		/// F1F2 リテイクを発見！のときの処理
 		/// </summary>
@@ -403,11 +487,17 @@ namespace VoiceCutAssist
 			RegisterHotKey(this.Handle, hotkeyID_R, MOD_CONTROL, Keys.R);
 
 			//textBox1.Text = Clipboard.GetText();
-			comboBox1.SelectedIndex = 0;
+			//comboBox1.SelectedIndex = 0;
 
 			goldWavehwnd = FindWindowEx(IntPtr.Zero, IntPtr.Zero, "TMainForm", null);
 
 			Console.WriteLine(GC.GetTotalMemory(false));
+
+			m_voiceListDlg = new Form3(this);
+			m_voiceListDlg.Show();
+			m_voiceListDlg.Top = this.Bottom;
+			m_voiceListDlg.Left = this.Left;
+
 		}
 
 		protected override void WndProc(ref Message m)
@@ -431,7 +521,8 @@ namespace VoiceCutAssist
 
 						m_preSaveName = copyFilename;
 
-						Do();
+						if( m_goldWaveVer == 5 ) Do();
+						else if( m_goldWaveVer == 4 ) Do_ver4();
 
 						System.Threading.Thread.Sleep(100);
 
@@ -470,49 +561,52 @@ namespace VoiceCutAssist
 
 		private void textBox1_TextChanged(object sender, EventArgs e)
 		{
-			/*
-			Match mr = Regex.Match( textBox1.Text, @"(.*_)(\d+)\D*");
-
-			m_enableNumric = mr.Success;
-
-			if ( mr.Success )
-			{
-				textBox1.BackColor = Color.White;
-
-				m_baseNmae = mr.Groups[1].ToString();
-
-				
-				m_countDigit = mr.Groups[2].ToString().Length;
-				m_nowSerialNum = int.Parse(mr.Groups[2].ToString());
-				
-			}
-			else
-			{
-				textBox1.BackColor = Color.Red;
-			}
-			*/
+		
 			string ret = Search_TakeCheck(textBox1.Text);
 
 			if( ret != "" )	textBox4.Text = ret;
 
 			int voiceID = Search_TakeCheckID(textBox1.Text);
 			if( voiceID != -1 ) m_nowSelectID = voiceID;
+
+			
 		}
 
 		private void IncFileName( int addNum = 1 )
 		{
-			//textBox1.Text = m_baseNmae + (m_nowSerialNum + addNum).ToString().PadLeft(m_countDigit, '0');
+			
 			m_nowSelectID += addNum;
+
 			if( m_nowSelectID < 0 ) m_nowSelectID = 0;
 			if (m_nowSelectID >= m_serifList.Count ) m_nowSelectID = m_serifList.Count-1;
 
-			if (m_serifList.Count > m_nowSelectID && m_nowSelectID != -1)	textBox1.Text = m_serifList[m_nowSelectID][0];
+			if (m_serifList.Count > m_nowSelectID && m_nowSelectID != -1)
+			{
+				textBox1.Text = m_serifList[m_nowSelectID][0];
+				m_voiceListDlg.SelctListViewItem(m_nowSelectID);
+			}
+		}
 
+		public void SelectVoiceID(int id)
+		{
+			m_nowSelectID = id;
+			if (m_serifList.Count > m_nowSelectID && m_nowSelectID != -1)
+			{
+				textBox1.Text = m_serifList[m_nowSelectID][0];
+			}
 		}
 
 		private void Form1_MouseWheel(object sender, MouseEventArgs e)
 		{
-			IncFileName( (e.Delta > 0 ?- 1:1) );
+			if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
+			{
+				var tmpFontSize = textBox4.Font.Size;
+				tmpFontSize += (e.Delta < 0 ? -1 : 1);
+				textBox4.Font = new Font("メイリオ", tmpFontSize);
+			}
+			else {
+				IncFileName( (e.Delta > 0 ?- 1:1) );
+			}
 		}
 
 		private void button1_Click(object sender, EventArgs e)
@@ -525,12 +619,14 @@ namespace VoiceCutAssist
 			IncFileName(1);
 		}
 
+		/*
 		private void textBox2_TextChanged(object sender, EventArgs e)
 		{
 			int result;
 			if( int.TryParse(textBox2.Text, out result) == false ) return;
 			waitTime = int.Parse(textBox2.Text);
 		}
+		*/
 
 		private void textBox3_DragDrop(object sender, DragEventArgs e)
 		{
@@ -655,6 +751,7 @@ namespace VoiceCutAssist
 			Regex regex = new Regex( "(.*?)\\t(.*)");
 
 			Match	result;
+
 			System.Text.Encoding fileEncode;
 			GetEncodeClass encCheck = new GetEncodeClass();
 			if (File.Exists(filePath))
@@ -744,25 +841,7 @@ namespace VoiceCutAssist
 
 		}
 
-		private void checkBox1_CheckedChanged(object sender, EventArgs e)
-		{
-			if( checkBox1.Checked == true )
-			{
-				groupBox2.Visible = false;
-				groupBox3.Visible = false;
 
-				this.MaximumSize = new Size(2560,220);
-				this.MinimumSize = new Size(650, 220);
-			}
-			else
-			{
-				groupBox2.Visible = true;
-				groupBox3.Visible = true;
-
-				this.MaximumSize = new Size(2560,380);
-				this.MinimumSize = new Size(650, 380);
-			}
-		}
 
 		private void button4_Click(object sender, EventArgs e)
 		{
@@ -795,6 +874,8 @@ namespace VoiceCutAssist
 				m_nowSelectID = 0;
 				textBox1.Text = m_serifList[m_nowSelectID][0];
 			}
+
+			m_voiceListDlg.ListUpdate();
 		}
 
 		private void timer1_Tick(object sender, EventArgs e)
@@ -805,13 +886,31 @@ namespace VoiceCutAssist
 
 				if (goldWavehwnd == IntPtr.Zero || IsWindow(goldWavehwnd) == false)
 				{
-					toolStripStatusLabel1.ForeColor = Color.Red;
-					toolStripStatusLabel1.Text = "GOLD WAVEが起動されていません。";
+					//.ForeColor = Color.Red;
+					//toolStripStatusLabel1.Text = "GOLD WAVEが起動されていません。";
+
+					if(goldWavehwnd == IntPtr.Zero || IsWindow(goldWavehwnd) == false )
+					{ 
+						goldWavehwnd = FindWindowEx(IntPtr.Zero, IntPtr.Zero, "OWL_Window", "GoldWave");
+
+						if (goldWavehwnd == IntPtr.Zero || IsWindow(goldWavehwnd) == false)
+						{
+							toolStripStatusLabel1.ForeColor = Color.Red;
+							toolStripStatusLabel1.Text = "GOLD WAVEが起動されていません。";
+						}
+						else
+						{
+							toolStripStatusLabel1.ForeColor = Color.Black;
+							toolStripStatusLabel1.Text = "GOLD WAVE ver4 とリンクしました。";
+							m_goldWaveVer = 4;
+						}
+					}
 				}
 				else
 				{
 					toolStripStatusLabel1.ForeColor = Color.Black;
-					toolStripStatusLabel1.Text = "GOLD WAVEとリンクしました。";
+					toolStripStatusLabel1.Text = "GOLD WAVE ver5 とリンクしました。";
+					m_goldWaveVer = 5;
 				}
 			}
 		}
@@ -852,13 +951,13 @@ namespace VoiceCutAssist
 				tmpID = noneIDList[i];
 				showList += m_serifList[tmpID][0] + "	" + m_serifList[tmpID][1] + Environment.NewLine;
 			}
-			//if (showList != "") System.Windows.Forms.MessageBox.Show(showList);
+			
 			if (showList != "") 
 			{
-				var dlg = new Form2( showList );
+				m_checkListDlg = new Form2( showList );
 				
-				dlg.ShowDialog();
-				dlg.Dispose();
+				m_checkListDlg.ShowDialog();
+				m_checkListDlg.Dispose();
 			}
 			else
 			{
